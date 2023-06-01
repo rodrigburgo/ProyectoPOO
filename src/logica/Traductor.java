@@ -2,7 +2,7 @@
 * Conversor de Java a python
 * Interfaces para los traductores
 * @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez Franco
-* @version 0.5, 2023/05/31
+* @version 0.6, 2023/06/01
 */
 
 package logica;

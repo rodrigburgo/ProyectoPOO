@@ -1,8 +1,8 @@
 /**
 * Conversor de Java a python
 * Interfaz Grafica
-* @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez
-* @version 0.8, 2023/05/31
+* @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez Franco
+* @version 0.9, 2023/06/01
 */
 
 package gui;
@@ -13,6 +13,7 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
@@ -46,6 +47,7 @@ public class VentanaPrincipal {
 
 	JFrame frame;
 	private JTextArea textArea;
+	 private JLabel errorLabel;
 
 	// Label para la imagen de presentación
 	JLabel ImagenPresentacion = new JLabel("");
@@ -74,7 +76,80 @@ public class VentanaPrincipal {
 		ImagenPresentacion.setIcon(PresentacionIcono);
 	}
 
-	/**
+	 /**
+     * Método para mostrar mensajes de error en la interfaz gráfica
+     * @param mensaje El mensaje de error a mostrar
+     */
+    private void mostrarError(String mensaje) {
+        errorLabel.setText(mensaje);
+        errorLabel.setVisible(true);
+    }
+
+    /**
+     * Método para limpiar los mensajes de error en la interfaz gráfica
+     */
+    private void limpiarErrores() {
+        errorLabel.setText("");
+        errorLabel.setVisible(false);
+    }
+	
+    /**
+     * Método para validar la selección de un archivo antes de cargarlo
+     */
+    private void cargarArchivo() {
+        JFileChooser fc = new JFileChooser();
+        int seleccion = fc.showOpenDialog(frame);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File fichero = fc.getSelectedFile();
+            String inputFile = fichero.getAbsolutePath();
+
+            try {
+                String contenido = ManejadorArchivos.leerArchivo(inputFile);
+                textArea.setText(contenido);
+                limpiarErrores();
+            } catch (Exception ex) {
+                mostrarError("Error al cargar el archivo seleccionado");
+            }
+        }
+    }
+    
+    /**
+     * Método para guardar el archivo con un JFileChooser
+     */
+    private void guardarArchivo() {
+        JFileChooser fc = new JFileChooser();
+        int seleccion = fc.showSaveDialog(frame);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File outputFile = fc.getSelectedFile();
+            String codigoPython = textArea.getText();
+
+            try {
+                ManejadorArchivos.escribirArchivo(outputFile.getAbsolutePath(), codigoPython);
+                limpiarErrores();
+                JOptionPane.showMessageDialog(frame, "Archivo guardado exitosamente");
+            } catch (Exception ex) {
+                mostrarError("Error al guardar el archivo");
+            }
+        }
+    }
+
+    /**
+     * Método para convertir el código de Java a Python y mostrarlo en el textarea
+     */
+    private void convertirCodigo() {
+        TraductorJavaPython traductor = new TraductorJavaPython();
+        String codigoJava = textArea.getText();
+
+        try {
+            String codigoPython = traductor.traducirHaciaPython(codigoJava);
+            textArea.setText(codigoPython);
+            limpiarErrores();
+        } catch (Exception ex) {
+            mostrarError("Error al convertir el código de Java a Python");
+        }
+    }
+    
+    /**
 	 *  Constructor de la clase VentanaPrincipal
 	 */
 	public VentanaPrincipal() {
@@ -130,7 +205,7 @@ public class VentanaPrincipal {
 		textArea.setBounds(0, 125, 632, 293);
 		bg.add(textArea);
 
-		// Botón para convertir el código de Java a Python y luego lo imprime en el textarea
+		// Botón para convertir código
 		JButton btnConvertir = new JButton("CONVERTIR");
 		btnConvertir.setForeground(new Color(255, 255, 255));
 		btnConvertir.setFont(new Font("Berlin Sans FB Demi", Font.BOLD, 11));
@@ -138,26 +213,17 @@ public class VentanaPrincipal {
 		btnConvertir.setBackground(new Color(0, 0, 0));
 		btnConvertir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TraductorJavaPython traducir = new TraductorJavaPython();
-				String codigoJava = textArea.getText();
-				String codigoPython = traducir.traducirHaciaPython(codigoJava);
-				textArea.setText(codigoPython);
+				convertirCodigo();
 			}
 		});
 		btnConvertir.setBounds(10, 155, 152, 33);
 		panel_1.add(btnConvertir);
 
-		// Botón para guardar el archivo con un JFileChooser para eligir el destino donde se guardara el archivo
+		// Botón para guardar archivo
 		JButton btnGuardar = new JButton("GUARDAR ARCHIVO");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc = new JFileChooser();
-				int seleccion = fc.showSaveDialog(frame);
-				if (seleccion == JFileChooser.APPROVE_OPTION) {
-					File outputFile = fc.getSelectedFile();
-					String codigoPython = textArea.getText();
-					ManejadorArchivos.escribirArchivo(outputFile.getAbsolutePath(), codigoPython);
-				}
+				guardarArchivo();
 			}
 		});
 		btnGuardar.setBorderPainted(false);
@@ -167,20 +233,11 @@ public class VentanaPrincipal {
 		btnGuardar.setBounds(10, 251, 152, 33);
 		panel_1.add(btnGuardar);
 
-		// Botón para cargar el archivo con un JFileChooser para eligir el destino donde se cargara el archivo
+		// Botón para cargar archivo
 		JButton btnCargar = new JButton("CARGAR ARCHIVO");
 		btnCargar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				JFileChooser fc = new JFileChooser();
-				int seleccion = fc.showOpenDialog(frame);
-				if (seleccion == JFileChooser.APPROVE_OPTION) {
-					File fichero = fc.getSelectedFile();
-					String inputFile = fichero.getAbsolutePath();
-
-					ManejadorArchivos.leerArchivo(inputFile);
-					textArea.setText(ManejadorArchivos.leerArchivo(inputFile));
-				}
+				cargarArchivo();				
 			}
 		});
 		btnCargar.setBorderPainted(false);
@@ -212,7 +269,12 @@ public class VentanaPrincipal {
 				System.exit(0);
 			}
 		});
-
+		
+		// Etiqueta para mostrar mensajes de error
+        errorLabel = new JLabel("");
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setBounds(21, 286, 453, 20);
+        frame.getContentPane().add(errorLabel);
 		
 	}
 }

@@ -1,8 +1,8 @@
 /**
 * Conversor de Java a python
 * Logica usada para poder resolver la traduccion
-* @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez
-* @version 0.8, 2023/05/31
+* @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez Franco
+* @version 0.9, 2023/06/01
 */
 
 package logica;

@@ -1,8 +1,8 @@
 /**
 * Conversor de Java a python
 * Run para poder inciar la aplicacion.
-* @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez
-* @version 0.5, 2023/05/31
+* @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez Franco
+* @version 0.6, 2023/06/01
 */
 
 package gui;
