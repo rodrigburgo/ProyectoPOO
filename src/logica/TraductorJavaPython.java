@@ -1,22 +1,27 @@
+/**
+* Conversor de Java a python
+* Logica usada para poder resolver la traduccion
+* @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez
+* @version 0.8, 2023/05/31
+*/
+
 package logica;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TraductorJavaPython {
-	private static String nombreClass;
-	private static String nombreFuncion;
-    private static final Map<String, String> PalabraJavaHaciaPython;
+/**
+ * Clase que implementa la interfaz Traductor para traducir código Java a Python.
+ */
+public class TraductorJavaPython implements Traductor {
+    private static String nombreClass;
+    private static String nombreFuncion;
+    public static Map<String, String> PalabraJavaHaciaPython;
 
     static {
+        // Mapeo de palabras clave de Java a sus equivalentes en Python
         PalabraJavaHaciaPython = new HashMap<>();
         PalabraJavaHaciaPython.put("\\bpublic\\b", "");
         PalabraJavaHaciaPython.put("\\bString\\b", "");
@@ -36,17 +41,23 @@ public class TraductorJavaPython {
         PalabraJavaHaciaPython.put("\\btoLowerCase\\b", "lower");
     }
 
-    public static String traducirHaciaPython(String CodigoJava) {
+    /**
+     * Traduce el código Java dado a Python.
+     *
+     * @param codigoJava el código Java a traducir
+     * @return el código traducido a Python
+     */
+    @Override
+    public String traducirHaciaPython(String codigoJava) {
         StringBuilder codigoPython = new StringBuilder();
 
-        String[] lineas = CodigoJava.split("\\n");      
+        String[] lineas = codigoJava.split("\\n");
 
         for (String linea : lineas) {
-        	linea = linea.trim();
+            linea = linea.trim();
 
             if (linea.startsWith("import") || linea.startsWith("//")) {
                 // Ignorar las declaraciones de importación en Python
-               // codigoPython.append(linea).append("\n");
                 continue;
             }
 
@@ -57,11 +68,8 @@ public class TraductorJavaPython {
                 Pattern regex = Pattern.compile(patron);
                 Matcher coincide = regex.matcher(linea);
                 linea = coincide.replaceAll(reemplazo);
-                 if (linea.contains(codigoPython)) {
-                	 
-                 }
-                	 
             }
+
             if (linea.contains("def") && nombreFuncion == null) {
                 Pattern pattern = Pattern.compile("\\bdef\\s+(\\w+)\\b");
                 Matcher matcher = pattern.matcher(linea);
@@ -69,24 +77,23 @@ public class TraductorJavaPython {
                     nombreFuncion = matcher.group(1);
                 }
             }
-            
+
             if (linea.contains("class") && nombreClass == null) {
                 Pattern pattern = Pattern.compile("\\bclass\\s+(\\w+)\\b");
                 Matcher matcher = pattern.matcher(linea);
                 if (matcher.find()) {
-                	nombreClass = matcher.group(1);
+                    nombreClass = matcher.group(1);
                 }
             }
 
             // Reemplazar int
             linea = linea.replaceAll("\\bint\\b", "");
             codigoPython.append(linea).append("\n");
-          
         }
-        codigoPython.append("\nif __name__==").append("__"+nombreFuncion+"__:\n");
-        codigoPython.append(nombreClass).append("."+nombreFuncion+"([])");
+
+        codigoPython.append("\nif __name__==").append("__" + nombreFuncion + "__:\n");
+        codigoPython.append(nombreClass).append("." + nombreFuncion + "([])");
+
         return codigoPython.toString();
     }
-    
-   
-    }
+}
