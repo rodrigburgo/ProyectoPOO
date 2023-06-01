@@ -13,8 +13,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Clase principal que representa el manejador de archivos
+ */
 public class ManejadorArchivos {
-
     /**
      * Lee el contenido de un archivo.
      * 
