@@ -1,0 +1,23 @@
+[33mcommit e7e416e03d574d62484db484853c4f7130cf5bcf[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Rodrigo Figueroa <rodrigburgo@gmail.com>
+Date:   Thu Jun 1 00:43:15 2023 -0400
+
+    Se agregan comentarios
+
+[33mcommit 13fac5d2270e8cf222010c5c0db2a9da6ce44db1[m
+Author: Rodrigo Figueroa <rodrigburgo@gmail.com>
+Date:   Wed May 31 23:45:49 2023 -0400
+
+    Se agregan comentarios
+
+[33mcommit 79cfeee3d64a92e9b98dd92d74bf0994fde0c91f[m
+Author: Rodrigo Figueroa <rodrigburgo@gmail.com>
+Date:   Wed May 31 20:49:31 2023 -0400
+
+    Se elimina la ventana Selector Archivos de la gui
+
+[33mcommit aee14c258e5a6abff45199a1cada8ac46f86dd84[m
+Author: Rodrigo Figueroa <rodrigburgo@gmail.com>
+Date:   Wed May 31 20:43:32 2023 -0400
+
+    Se añade el git al proyecto

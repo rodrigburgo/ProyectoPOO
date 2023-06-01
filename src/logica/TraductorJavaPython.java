@@ -22,7 +22,6 @@ public class TraductorJavaPython implements Traductor {
 
     static {
         // Mapeo de palabras clave de Java a sus equivalentes en Python
- 
         PalabraJavaHaciaPython = new HashMap<>();  
         PalabraJavaHaciaPython.put("\\bpublic\\b", "");
         PalabraJavaHaciaPython.put("\\bString\\b", "");
@@ -69,7 +68,7 @@ public class TraductorJavaPython implements Traductor {
 
                 Pattern regex = Pattern.compile(patron);
                 Matcher coincide = regex.matcher(linea);
-                linea = coincide.replaceAll(reemplazo); 
+                linea = coincide.replaceAll(reemplazo);
                 linea = linea.replace(patron, reemplazo);
             }
 
