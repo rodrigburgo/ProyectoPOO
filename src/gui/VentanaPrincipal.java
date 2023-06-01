@@ -39,7 +39,9 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-//Clase principal que representa la ventana principal del programa
+/**
+ * Clase principal que representa la ventana principal del programa
+ */
 public class VentanaPrincipal {
 
 	JFrame frame;
@@ -50,7 +52,9 @@ public class VentanaPrincipal {
 	// Label para el fondo de la ventana
 	JLabel ImagenFondo = new JLabel("");
 
-	// Método para ajustar la imagen de fondo al tamaño del JLabel 
+	/**
+	 * Método para ajustar la imagen de fondo al tamaño del JLabel 
+	 */
 	public void ImagenFondo() {
 		ImageIcon Fondo;
 		Fondo = new ImageIcon(getClass().getResource("/imagenes/fondo.png"));
@@ -59,7 +63,9 @@ public class VentanaPrincipal {
 		ImagenFondo.setIcon(FondoIcono);
 	}
 
-	// Método para ajustar la imagen de presentación al tamaño del JLabel
+	/**
+	 *  Método para ajustar la imagen de presentación al tamaño del JLabel
+	 */
 	public void ImagenPresentacion() {
 		ImageIcon Presentacion;
 		Presentacion = new ImageIcon(getClass().getResource("/imagenes/traductor.png"));
@@ -68,13 +74,17 @@ public class VentanaPrincipal {
 		ImagenPresentacion.setIcon(PresentacionIcono);
 	}
 
-	// Constructor de la clase VentanaPrincipal
+	/**
+	 *  Constructor de la clase VentanaPrincipal
+	 */
 	public VentanaPrincipal() {
 		initialize();
 		ImagenPresentacion();
 	}
 
-	// Método de inicialización de la ventana principal
+	/**
+	 *  Método de inicialización de la ventana principal
+	 */
 	private void initialize() {
 
 		frame = new JFrame();

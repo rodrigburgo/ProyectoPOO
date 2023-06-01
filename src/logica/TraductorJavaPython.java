@@ -18,10 +18,11 @@ import java.util.regex.Pattern;
 public class TraductorJavaPython implements Traductor {
     private static String nombreClass;
     private static String nombreFuncion;
+    /**
+     *  Mapeo de palabras clave de Java a sus equivalentes en Python
+     */
     public static Map<String, String> PalabraJavaHaciaPython;
-
     static {
-        // Mapeo de palabras clave de Java a sus equivalentes en Python
         PalabraJavaHaciaPython = new HashMap<>();  
         PalabraJavaHaciaPython.put("\\bpublic\\b", "");
         PalabraJavaHaciaPython.put("\\bString\\b", "");

@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"gui","l":"Main"},{"p":"persistencia","l":"ManejadorArchivos"},{"p":"logica","l":"Traductor"},{"p":"logica","l":"TraductorJavaPython"},{"p":"gui","l":"VentanaPrincipal"}];updateSearchResults();
