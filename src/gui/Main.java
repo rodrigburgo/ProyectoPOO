@@ -2,7 +2,7 @@
 * Conversor de Java a python
 * Run para poder inciar la aplicacion.
 * @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez
-* @version 0.8, 2023/05/31
+* @version 0.5, 2023/05/31
 */
 
 package gui;
@@ -11,6 +11,8 @@ import java.awt.EventQueue;
 
 /**
  * Clase principal que contiene el método main para iniciar la aplicación
+ *  
+ *   @param args los argumentos de línea de comandos (no se utilizan en este caso).
  */
 public class Main {
 

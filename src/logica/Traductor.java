@@ -1,7 +1,7 @@
 /**
 * Conversor de Java a python
 * Interfaces para los traductores
-* @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez
+* @author Rodrigo Alonso Figueroa Burgos / Thomas Gomez Franco
 * @version 0.5, 2023/05/31
 */
 
@@ -12,8 +12,11 @@ package logica;
  */
 public interface Traductor {
     public String traducirHaciaPython(String codigoJava);
-    /*
+    /**
      * Traduce el código Java dado a Python.
+     *
+     * @param codigoJava el código Java a traducir
+     * @return el código traducido a Python
      */
 }
 

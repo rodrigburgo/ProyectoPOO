@@ -15,34 +15,31 @@ import java.util.regex.Pattern;
 /**
  * Clase que implementa la interfaz Traductor para traducir código Java a Python.
  */
-public class TraductorJavaPython implements Traductor {
+public class TraductorSinER implements Traductor {
     private static String nombreClass;
     private static String nombreFuncion;
     public static Map<String, String> PalabraJavaHaciaPython;
 
     static {
         // Mapeo de palabras clave de Java a sus equivalentes en Python
- 
-        PalabraJavaHaciaPython = new HashMap<>();  
-        PalabraJavaHaciaPython.put("\\bpublic\\b", "");
-        PalabraJavaHaciaPython.put("\\bString\\b", "");
-        PalabraJavaHaciaPython.put("\\bvoid\\b", "@staticmethod\r\n    def");
-        PalabraJavaHaciaPython.put("\\b(int|String)\\s*\\[\\s*\\]", "");
-        PalabraJavaHaciaPython.put("\\b(int|String)\\s*\\[\\s*\\]\\s*\\[\\s*\\]", "");
-        PalabraJavaHaciaPython.put("\\b(int|String)\\s*\\[\\s*\\]\\s*(\\w+)", "$2");
-        PalabraJavaHaciaPython.put("\\bnew\\b", "");
-        PalabraJavaHaciaPython.put("\\bSystem.out.println\\b", "print");
-        PalabraJavaHaciaPython.put("\\blength\\b", "len");
-        PalabraJavaHaciaPython.put("\\b\\w+\\b", "$0");
-        PalabraJavaHaciaPython.put("\\bstatic\\b", "");
-        PalabraJavaHaciaPython.put("\\bString\\[\\]\\s+args\\b", "object");
-        PalabraJavaHaciaPython.put("\\b\\{(.*?)\\}\\s*;", "[$1]");
-        PalabraJavaHaciaPython.put(";", "");
-        PalabraJavaHaciaPython.put("\\btoUpperCase\\b", "upper");
-        PalabraJavaHaciaPython.put("\\btoLowerCase\\b", "lower"); 
+    	
+    	 PalabraJavaHaciaPython = new HashMap<>();
+         PalabraJavaHaciaPython.put("public", "");
+         PalabraJavaHaciaPython.put("String", "");
+         PalabraJavaHaciaPython.put("void", "@staticmethod\r\n    def");
+         PalabraJavaHaciaPython.put("int[]", "");
+         PalabraJavaHaciaPython.put("String[]", "");
+         PalabraJavaHaciaPython.put("int[][]", "");
+         PalabraJavaHaciaPython.put("new", "");
+         PalabraJavaHaciaPython.put("System.out.println", "print");
+         PalabraJavaHaciaPython.put("length", "len");
+         PalabraJavaHaciaPython.put("toUpperCase", "upper");
+         PalabraJavaHaciaPython.put("toLowerCase", "lower");
+         PalabraJavaHaciaPython.put(";", "");
+       
     }
 
-    /*
+    /**
      * Traduce el código Java dado a Python.
      *
      * @param codigoJava el código Java a traducir
@@ -67,12 +64,11 @@ public class TraductorJavaPython implements Traductor {
                 String reemplazo = entry.getValue();
 
 
-                Pattern regex = Pattern.compile(patron);
-                Matcher coincide = regex.matcher(linea);
-                linea = coincide.replaceAll(reemplazo); 
+
                 linea = linea.replace(patron, reemplazo);
             }
 
+          
         
             if (linea.contains("def") && nombreFuncion == null) {
                 Pattern pattern = Pattern.compile("\\bdef\\s+(\\w+)\\b");
