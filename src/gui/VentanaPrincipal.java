@@ -12,6 +12,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Icon;
@@ -39,16 +40,23 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 /**
  * Clase principal que representa la ventana principal del programa
  */
 public class VentanaPrincipal {
 
-	JFrame frame;
+	JFrame frmConversorDeLenguajes;
 	private JTextArea textArea;
-	 private JLabel errorLabel;
+	private JLabel errorLabel;
+	int xMouse;
+	int yMouse;
 
+	
 	// Label para la imagen de presentación
 	JLabel ImagenPresentacion = new JLabel("");
 	// Label para el fondo de la ventana
@@ -98,7 +106,7 @@ public class VentanaPrincipal {
      */
     private void cargarArchivo() {
         JFileChooser fc = new JFileChooser();
-        int seleccion = fc.showOpenDialog(frame);
+        int seleccion = fc.showOpenDialog(frmConversorDeLenguajes);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File fichero = fc.getSelectedFile();
             String inputFile = fichero.getAbsolutePath();
@@ -118,7 +126,7 @@ public class VentanaPrincipal {
      */
     private void guardarArchivo() {
         JFileChooser fc = new JFileChooser();
-        int seleccion = fc.showSaveDialog(frame);
+        int seleccion = fc.showSaveDialog(frmConversorDeLenguajes);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File outputFile = fc.getSelectedFile();
             String codigoPython = textArea.getText();
@@ -126,7 +134,7 @@ public class VentanaPrincipal {
             try {
                 ManejadorArchivos.escribirArchivo(outputFile.getAbsolutePath(), codigoPython);
                 limpiarErrores();
-                JOptionPane.showMessageDialog(frame, "Archivo guardado exitosamente");
+                JOptionPane.showMessageDialog(frmConversorDeLenguajes, "Archivo guardado exitosamente");
             } catch (Exception ex) {
                 mostrarError("Error al guardar el archivo");
             }
@@ -162,20 +170,39 @@ public class VentanaPrincipal {
 	 */
 	private void initialize() {
 
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setBounds(100, 100, 825, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmConversorDeLenguajes = new JFrame();
+		frmConversorDeLenguajes.setUndecorated(true);
+		frmConversorDeLenguajes.setTitle("Conversor de lenguajes");
+		frmConversorDeLenguajes.setResizable(false);
+		frmConversorDeLenguajes.setBounds(100, 100, 808, 461);
+		frmConversorDeLenguajes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmConversorDeLenguajes.getContentPane().setLayout(null);
 
 		// Este panel se crea para fondo.
 		JPanel bg = new JPanel();
 		bg.setBounds(0, 0, 809, 461);
-		frame.getContentPane().add(bg);
+		frmConversorDeLenguajes.getContentPane().add(bg);
 		bg.setLayout(null);
 
 		// Este panel se crea para la imagen de presentacion y un label que indicara una descripcion del programa
 		JPanel panel = new JPanel();
+		panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				xMouse= e.getX();
+				yMouse= e.getY();
+			}
+
+		});
+		panel.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int Y = e.getYOnScreen();
+				int X = e.getXOnScreen();
+				frmConversorDeLenguajes.setLocation(X - xMouse, Y - yMouse);
+			}
+		});
+		
 		panel.setBounds(0, 0, 811, 121);
 		panel.setBackground(new Color(255, 105, 180));
 		bg.add(panel);
@@ -183,7 +210,7 @@ public class VentanaPrincipal {
 
 		// Imagen de presentacion.
 		ImagenPresentacion = new JLabel("");
-		ImagenPresentacion.setBounds(10, 11, 140, 88);
+		ImagenPresentacion.setBounds(40, 13, 140, 88);
 		panel.add(ImagenPresentacion);
 
 		//Este label tiene la descripcion del programa.
@@ -202,8 +229,14 @@ public class VentanaPrincipal {
 		
 		// Este textarea contendra el string del archivo a cargar o despues de traducir y es lo tambien contrendra el resultado final al guardar el archivo
 		textArea = new JTextArea();
-		textArea.setBounds(0, 125, 632, 293);
+		textArea.setBackground(new Color(215, 215, 215));
+		textArea.setLineWrap(true);
+		textArea.setBounds(1, 121, 634, 301);
 		bg.add(textArea);
+		
+		JScrollPane scroll = new JScrollPane (textArea);
+		scroll.setBounds(1, 121, 634, 301);
+		bg.add(scroll);
 
 		// Botón para convertir código
 		JButton btnConvertir = new JButton("CONVERTIR");
@@ -252,7 +285,7 @@ public class VentanaPrincipal {
 		// Este panel se crea para el pie de la interfaz grafica y dentro contiene el boton para finalizar el programa
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(0, 422, 784, 39);
-		panel_2.setBackground(new Color(220, 220, 220));
+		panel_2.setBackground(new Color(232, 0, 116));
 		bg.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -264,6 +297,7 @@ public class VentanaPrincipal {
 		btnFinalizar.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 11));
 		btnFinalizar.setBackground(new Color(0, 0, 0));
 		btnFinalizar.setBorderPainted(false);
+	
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -274,7 +308,8 @@ public class VentanaPrincipal {
         errorLabel = new JLabel("");
         errorLabel.setForeground(Color.RED);
         errorLabel.setBounds(21, 286, 453, 20);
-        frame.getContentPane().add(errorLabel);
+        frmConversorDeLenguajes.getContentPane().add(errorLabel);
 		
 	}
+
 }

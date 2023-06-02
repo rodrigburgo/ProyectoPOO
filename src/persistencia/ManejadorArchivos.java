@@ -13,6 +13,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 /**
  * Clase principal que representa el manejador de archivos
  */
@@ -35,13 +37,13 @@ public class ManejadorArchivos {
                 contenido.append(linea).append("\n");
             }
         } catch (IOException e) {
-            System.err.println("Error al leer el archivo: " + e.getMessage());
+        	JOptionPane.showMessageDialog (null,"Error al leer el archivo: " + e.getMessage());
         } finally {
             if (lector != null) {
                 try {
                     lector.close();
                 } catch (IOException e) {
-                    System.err.println("Error al cerrar el lector de archivos: " + e.getMessage());
+                    JOptionPane.showMessageDialog (null,"Error al cerrar el lector de archivos: " + e.getMessage());
                 }
             }
         }
@@ -62,13 +64,13 @@ public class ManejadorArchivos {
             escritor = new BufferedWriter(new FileWriter(rutaArchivo));
             escritor.write(contenido);
         } catch (IOException e) {
-            System.err.println("Error al escribir en el archivo: " + e.getMessage());
+        	JOptionPane.showMessageDialog (null,"Error al escribir en el archivo: " + e.getMessage());
         } finally {
             if (escritor != null) {
                 try {
                     escritor.close();
                 } catch (IOException e) {
-                    System.err.println("Error al cerrar el escritor de archivos: " + e.getMessage());
+                	JOptionPane.showMessageDialog (null,"Error al cerrar el escritor de archivos: " + e.getMessage());
                 }
             }
         }

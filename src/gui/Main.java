@@ -25,7 +25,7 @@ public class Main {
             public void run() {
                 try {
                     VentanaPrincipal window = new VentanaPrincipal();
-                    window.frame.setVisible(true);
+                    window.frmConversorDeLenguajes.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
